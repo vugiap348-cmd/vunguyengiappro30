@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đề Thi Thử THPT - Lịch Sử - Số 31</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --gold: #d4a017;
+    --dark: #1a1a2e;
+    --dark2: #16213e;
+    --mid: #0f3460;
+    --light-bg: #f5f0e8;
+    --card-bg: #fffdf8;
+    --border: #d4c5a9;
+    --text: #2c2c2c;
+    --muted: #7a7a7a;
+    --success: #27ae60;
+    --error: #c0392b;
+    --warning: #e67e22;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .exam-header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%);
+    color: white;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .exam-header-left h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  .exam-header-left p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+
+  /* TIMER */
+  .timer-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 12px 20px;
+    min-width: 140px;
+  }
+
+  .timer-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .timer-display {
+    font-family: 'Merriweather', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 3px;
+    transition: color 0.3s;
+  }
+
+  .timer-display.warning { color: var(--warning); animation: pulse 1s infinite; }
+  .timer-display.danger { color: var(--red-light); animation: pulse 0.5s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    background: rgba(255,255,255,0.15);
+    height: 4px;
+    position: sticky;
+    top: 90px;
+    z-index: 99;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--red-light));
+    transition: width 0.4s ease;
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Merriweather', serif;
+    font-size: 1rem;
+    color: white;
+    background: var(--mid);
+    padding: 10px 20px;
+    border-radius: 8px 8px 0 0;
+    border-left: 5px solid var(--gold);
+    margin-top: 32px;
+    margin-bottom: 0;
+  }
+
+  .section-desc {
+    background: #eef2f8;
+    border: 1px solid #c9d8ee;
+    border-top: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: #2c4a7a;
+    margin-bottom: 16px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s;
+  }
+
+  .question-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+  .question-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .question-text {
+    font-size: 0.97rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  /* PASSAGE */
+  .passage-box {
+    background: #fff8e7;
+    border: 1px solid #e8d5a3;
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: #4a3a0d;
+    font-style: italic;
+  }
+
+  .passage-source {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 8px;
+    font-style: normal;
+  }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    font-size: 0.93rem;
+  }
+
+  .option-label:hover {
+    border-color: var(--mid);
+    background: #eef4ff;
+  }
+
+  .option-label input[type="radio"] { display: none; }
+
+  .option-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #bbb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #999;
+    transition: all 0.2s;
+  }
+
+  .option-label.selected {
+    border-color: var(--mid);
+    background: #ddeeff;
+  }
+
+  .option-label.selected .option-dot {
+    background: var(--mid);
+    border-color: var(--mid);
+    color: white;
+  }
+
+  /* AFTER SUBMIT - correct/wrong */
+  .option-label.correct {
+    border-color: var(--success) !important;
+    background: #eafaf1 !important;
+  }
+  .option-label.correct .option-dot {
+    background: var(--success) !important;
+    border-color: var(--success) !important;
+    color: white !important;
+  }
+  .option-label.wrong {
+    border-color: var(--error) !important;
+    background: #fdf0f0 !important;
+  }
+  .option-label.wrong .option-dot {
+    background: var(--error) !important;
+    border-color: var(--error) !important;
+    color: white !important;
+  }
+
+  /* PART 2 - True/False */
+  .tf-grid { display: flex; flex-direction: column; gap: 12px; }
+
+  .tf-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: white;
+  }
+
+  .tf-item-label {
+    font-size: 0.93rem;
+    line-height: 1.7;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .tf-item-label strong { color: var(--mid); }
+
+  .tf-buttons { display: flex; gap: 10px; }
+
+  .tf-btn {
+    padding: 6px 20px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    background: white;
+    cursor: pointer;
+    font-size: 0.87rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    color: var(--text);
+  }
+
+  .tf-btn:hover { border-color: var(--mid); }
+  .tf-btn.selected-true { border-color: var(--success); background: #eafaf1; color: var(--success); }
+  .tf-btn.selected-false { border-color: var(--error); background: #fdf0f0; color: var(--error); }
+
+  /* After submit TF */
+  .tf-btn.correct-true { border-color: var(--success) !important; background: #eafaf1 !important; color: var(--success) !important; font-weight: 700; }
+  .tf-btn.wrong-true { border-color: var(--error) !important; background: #fdf0f0 !important; color: var(--error) !important; }
+  .tf-btn.correct-false { border-color: var(--success) !important; background: #eafaf1 !important; color: var(--success) !important; font-weight: 700; }
+  .tf-btn.wrong-false { border-color: var(--error) !important; background: #fdf0f0 !important; color: var(--error) !important; }
+
+  /* SUBMIT AREA */
+  .submit-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 2px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    z-index: 100;
+  }
+
+  .answered-count {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .answered-count span {
+    font-weight: 700;
+    color: var(--mid);
+    font-size: 1.1rem;
+  }
+
+  .btn-submit {
+    background: linear-gradient(135deg, var(--red), var(--red-light));
+    color: white;
+    border: none;
+    padding: 12px 36px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(192,57,43,0.3);
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192,57,43,0.4);
+  }
+
+  .btn-submit:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.show { display: flex; }
+
+  .modal {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes modalIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .modal h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.4rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+
+  .modal .score-big {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--mid);
+    margin: 16px 0;
+    font-family: 'Merriweather', serif;
+  }
+
+  .modal .score-detail {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .btn-retry {
+    padding: 10px 28px;
+    border-radius: 8px;
+    border: 2px solid var(--mid);
+    background: white;
+    color: var(--mid);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .btn-retry:hover { background: var(--mid); color: white; }
+
+  .btn-review {
+    padding: 10px 28px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(135deg, var(--mid), var(--dark));
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .btn-review:hover { opacity: 0.85; }
+
+  /* SCORE ROW */
+  .score-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 12px 0;
+  }
+  .score-box {
+    background: var(--light-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    min-width: 100px;
+  }
+  .score-box .sb-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .score-box .sb-val { font-size: 1.4rem; font-weight: 700; color: var(--dark); margin-top: 2px; }
+
+  /* RESULT BADGE */
+  .result-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-left: 8px;
+  }
+  .badge-correct { background: #eafaf1; color: var(--success); border: 1px solid var(--success); }
+  .badge-wrong { background: #fdf0f0; color: var(--error); border: 1px solid var(--error); }
+
+  /* EXPLANATION */
+  .explanation {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #f0f8ff;
+    border-left: 3px solid var(--mid);
+    border-radius: 6px;
+    font-size: 0.87rem;
+    color: #2c4a7a;
+    display: none;
+  }
+  .explanation.show { display: block; }
+
+  /* CONFIRM MODAL */
+  .confirm-modal .modal-actions { margin-top: 16px; }
+  .btn-cancel { padding: 10px 28px; border-radius: 8px; border: 2px solid #ccc; background: white; color: #555; font-weight: 700; cursor: pointer; font-size: 0.95rem; }
+  .btn-confirm { padding: 10px 28px; border-radius: 8px; border: none; background: var(--red); color: white; font-weight: 700; cursor: pointer; font-size: 0.95rem; }
+
+  /* SHUFFLE INDICATOR */
+  .shuffle-note { font-size: 0.8rem; color: var(--muted); background: #eef; border-radius: 6px; padding: 6px 12px; margin-bottom: 12px; display: inline-block; }
+
+  @media (max-width: 600px) {
+    .exam-header { flex-direction: column; gap: 12px; padding: 16px; }
+    .main { padding: 20px 12px 80px; }
+    .score-row { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="exam-header">
+  <div class="exam-header-left">
+    <h1>ĐỀ THI THỬ THPT – SỐ 31</h1>
+    <p>Môn Lịch Sử &nbsp;|&nbsp; Thời gian: 50 phút</p>
+  </div>
+  <div class="timer-wrap">
+    <div class="timer-label">Thời gian còn lại</div>
+    <div class="timer-display" id="timerDisplay">45:00</div>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-bar-wrap">
+  <div class="progress-bar" id="progressBar" style="width:0%"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="main" id="examMain">
+  <div id="examContent"></div>
+</main>
+
+<!-- SUBMIT AREA -->
+<div class="submit-area" id="submitArea">
+  <div class="answered-count">Đã trả lời: <span id="answeredCount">0</span> / <span id="totalQ">28</span> câu</div>
+  <button class="btn-submit" id="btnSubmit" onclick="confirmSubmit()">📩 Nộp Bài</button>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal confirm-modal">
+    <span class="modal-icon">⚠️</span>
+    <h2>Xác nhận nộp bài</h2>
+    <p class="score-detail" id="confirmMsg"></p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeConfirm()">Làm tiếp</button>
+      <button class="btn-confirm" onclick="doSubmit()">Nộp bài ngay</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT MODAL -->
+<div class="modal-overlay" id="resultModal">
+  <div class="modal">
+    <span class="modal-icon" id="resultIcon">🎉</span>
+    <h2 id="resultTitle">Kết quả bài thi</h2>
+    <div class="score-big" id="scoreBig">0.0</div>
+    <div class="score-row" id="scoreRow"></div>
+    <p class="score-detail" id="scoreDetail"></p>
+    <div class="modal-actions">
+      <button class="btn-retry" onclick="retryExam()">🔄 Làm lại</button>
+      <button class="btn-review" onclick="reviewAnswers()">📋 Xem đáp án</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const PART1_DATA = [
+  {
+    id: 'p1q1',
+    text: 'Câu 1: Hồ Quý Ly đã thực hiện chính sách nào sau đây nhằm hạn chế sự phát triển của chế độ sở hữu ruộng đất lớn trong các điền trang, thái ấp của quý tộc nhà Trần?',
+    options: ['A. Phát hành tiền giấy.', 'B. Chính sách hạn điền.', 'C. Chính sách đồn điền.', 'D. Thống nhất đo lường.'],
+    answer: 1
+  },
+  {
+    id: 'p1q2',
+    text: 'Câu 2: Nội dung nào sau đây phản ánh đúng hoạt động xác lập, thực thi chủ quyền của nhà Nguyễn đối với quần đảo Hoàng Sa, quần đảo Trường Sa?',
+    options: ['A. Lập ra các đội Hoàng Sa, Bắc Hải.', 'B. Xây dựng các căn cứ hải quân lớn.', 'C. Tuyên bố chủ quyền với nhà Thanh.', 'D. Di dân ra sinh sống trên các đảo lớn.'],
+    answer: 0
+  },
+  {
+    id: 'p1q3',
+    text: 'Câu 3: Nội dung nào sau đây phản ánh đúng nội dung của chế độ "hồi tỵ" được thực hiện trong cuộc cải cách hành chính của vua Minh Mạng (nửa đầu thế kỉ XIX)?',
+    options: ['A. Anh, em, cha, con, thầy, trò không được làm quan cùng một chỗ.', 'B. Các địa phương không được tuyển chọn quan lại tại chỗ, vĩnh viễn.', 'C. Người thân, tôn thất, dòng họ của hoàng hậu không được làm quan.', 'D. Người đỗ đạt trong cùng một khoa thi không được làm quan một nơi.'],
+    answer: 0
+  },
+  {
+    id: 'p1q4',
+    text: 'Câu 4: Nội dung nào sau đây phản ánh đúng về tầm quan trọng của Biển Đông đối với Việt Nam trong lĩnh vực an ninh quốc phòng?',
+    options: ['A. Là tuyến phòng thủ từ phía đông của đất nước.', 'B. Kiểm soát con đường buôn bán lớn nhất thế giới.', 'C. Khống chế khu vực châu Á - Thái Bình Dương.', 'D. Là khu vực có trữ lượng thủy hải sản phong phú.'],
+    answer: 0
+  },
+  {
+    id: 'p1q5',
+    text: 'Câu 5: Cơ quan nào của Liên hợp quốc chịu trách nhiệm chính trong việc xét xử các tranh chấp, xung đột trên thế giới?',
+    options: ['A. Đại hội đồng.', 'B. Ban thư ký.', 'C. Tòa án quốc tế.', 'D. Hội đồng bảo an.'],
+    answer: 2
+  },
+  {
+    id: 'p1q6',
+    text: 'Câu 6: Khu vực nào sau đây không thuộc phạm vi đóng quân giải giáp quân đội phát xít của Liên Xô được quyết định trong hội nghị Ianta (2/1945)?',
+    options: ['A. Đông Âu.', 'B. Tây Âu.', 'C. Đông Đức.', 'D. Bắc Triều Tiên.'],
+    answer: 1
+  },
+  {
+    id: 'p1q7',
+    text: 'Câu 7: Nội dung nào sau đây không phải là lí do thành lập của tổ chức Hiệp hội các quốc gia Đông Nam Á (ASEAN)?',
+    options: ['A. Ảnh hưởng của Trung Quốc ở khu vực Biển Đông.', 'B. Nhu cầu liên kết, hợp tác cùng nhau phát triển.', 'C. Hạn chế ảnh hưởng của các cường quốc bên ngoài.', 'D. Tác động của cuộc cách mạng khoa học – kĩ thuật.'],
+    answer: 0
+  },
+  {
+    id: 'p1q8',
+    text: 'Câu 8: Quá trình mở rộng thành viên của ASEAN diễn ra lâu dài và đầy trở ngại là do một trong những nguyên nhân nào sau đây?',
+    options: ['A. Những tác động của cục diện Chiến tranh lạnh.', 'B. Sự khác biệt về văn hóa giữa các quốc gia.', 'C. Ảnh hưởng và tác động to lớn từ Trung Quốc.', 'D. Chiến lược phát triển kinh tế khác nhau ở các nước.'],
+    answer: 0
+  },
+  // Passage group 9-11
+  {
+    id: 'p1q9',
+    text: 'Câu 9: Nội dung nào sau đây được đề cập đến trong đoạn tư liệu trên?',
+    options: ['A. Việt Nam giúp nhân dân Campuchia chống chế độ diệt chủng.', 'B. Việt Nam và Campuchia đoàn kết để kháng chiến chống Mỹ.', 'C. Việt Nam hỗ trợ Campuchia phát triển kinh tế sau chiến tranh.', 'D. Việt Nam và Campuchia thiết lập quan hệ đối tác chiến lược.'],
+    answer: 0,
+    passageId: 'passage1'
+  },
+  {
+    id: 'p1q10',
+    text: 'Câu 10: Nội dung nào sau đây thể hiện đúng lý do quân đội Việt Nam ở lại Campuchia giai đoạn 1979 – 1989?',
+    options: ['A. Nhằm hỗ trợ chính quyền Pôn Pốt xây dựng đất nước.', 'B. Giúp đỡ nhân dân Campuchia xây dựng lại đất nước.', 'C. Mở mặt trận mới để tiến hành kháng chiến chống Mỹ.', 'D. Phối hợp với cuộc chiến tranh bảo vệ biên giới phía Bắc.'],
+    answer: 1,
+    passageId: 'passage1'
+  },
+  {
+    id: 'p1q11',
+    text: 'Câu 11: Nhận định nào sau đây là đúng về tác động của việc Việt Nam đưa quân sang giúp đỡ nhân dân Campuchia giai đoạn 1979 – 1989?',
+    options: ['A. Gây khó khăn cho việc Việt Nam gia nhập tổ chức Liên hợp quốc.', 'B. Gây trở ngại cho quá trình mở rộng thành viên của tổ chức ASEAN.', 'C. Ngăn cản quá trình Việt Nam thống nhất đất nước về mặt nhà nước.', 'D. Tạo điều kiện thuận lợi để Việt Nam tiến hành công cuộc đổi mới.'],
+    answer: 1,
+    passageId: 'passage1'
+  },
+  {
+    id: 'p1q12',
+    text: 'Câu 12: Từ năm 1951, tổ chức nào sau đây đã lãnh đạo cuộc kháng chống thực dân Pháp của nhân dân Việt Nam đi đến thắng lợi?',
+    options: ['A. Đảng Lao động Việt Nam.', 'B. Đảng Dân chủ Việt Nam.', 'C. Việt Nam Quốc dân đảng.', 'D. Tân Việt Cách mạng đảng.'],
+    answer: 0
+  },
+  {
+    id: 'p1q13',
+    text: 'Câu 13: Nền kinh tế Việt Nam trước khi thực hiện đường lối đổi mới (1986) có đặc điểm nào sau đây?',
+    options: ['A. Nền kinh tế khép kín, tự cung tự cấp.', 'B. Nền kinh tế tập trung, quan liêu, bao cấp.', 'C. Nền kinh tế thị trường có định hướng.', 'D. Nền kinh tế hàng hóa nhiều thành phần.'],
+    answer: 1
+  },
+  {
+    id: 'p1q14',
+    text: 'Câu 14: Nội dung nào sau đây là một trong những hạn chế của công cuộc đổi đất nước ở Việt Nam trên lĩnh vực văn hóa?',
+    options: ['A. Các giá trị văn hóa phương Tây được du nhập mạnh mẽ.', 'B. Nhiều giá trị văn hóa truyền thống của dân tộc bị mai một.', 'C. Không xây dựng được hệ tư tưởng chính thống về văn hóa.', 'D. Văn hóa truyền thống dân tộc không truyền bá ra bên ngoài.'],
+    answer: 1
+  },
+  {
+    id: 'p1q15',
+    text: 'Câu 15: Chủ tịch Hồ Chí Minh kí với đại diện Chính phủ Pháp Tạm ước (14/9/1946) nhằm mục đích',
+    options: ['A. kéo dài thời gian hòa bình, chuẩn bị kháng chiến.', 'B. tranh thủ sự giúp đỡ của các nước xã hội chủ nghĩa.', 'C. buộc Pháp công nhận nền độc lập của Việt Nam.', 'D. nhanh chóng lập lại hòa bình ở Đông Dương.'],
+    answer: 0
+  },
+  {
+    id: 'p1q16',
+    text: 'Câu 16: Một trong những hoạt động đối ngoại của Chính phủ Việt Nam Dân chủ Cộng hòa trong những năm đầu bùng nổ cuộc kháng chiến toàn quốc chống thực dân Pháp là',
+    options: ['A. kêu gọi nhân dân Pháp chống chiến tranh.', 'B. tiến hành hợp tác song phương với Hoa Kì.', 'C. liên kết chặt chẽ với các nước phương Tây.', 'D. kêu gọi sự giúp đỡ của các nước tư bản.'],
+    answer: 0
+  },
+  {
+    id: 'p1q17',
+    text: 'Câu 17: Nội dung nào sau đây phản ánh không đúng hoạt động đối ngoại của Chính phủ Việt Nam Dân chủ Cộng hòa trong cuộc kháng chiến chống Pháp (1945-1954)?',
+    options: ['A. Nhận viện trợ quân sự từ các nước Tây Âu.', 'B. Đề nghị Pháp mở các cuộc thương lượng.', 'C. Mở các cơ quan đại diện ngoại giao ở châu Á.', 'D. Lập các cơ quan thông tin ở nhiều nước.'],
+    answer: 0
+  },
+  {
+    id: 'p1q18',
+    text: 'Câu 18: Tổ chức nào sau đây được thành lập theo quyết định của Hội nghị lần thứ 8 Ban Chấp hành Trung ương Đảng Cộng sản Đông Dương (5-1941)?',
+    options: ['A. Việt Nam Độc lập Đồng minh.', 'B. Đảng Lao động Việt Nam.', 'C. Tân Việt Cách mạng đảng.', 'D. Mặt trận Dân chủ Đông Dương.'],
+    answer: 0
+  },
+  {
+    id: 'p1q19',
+    text: 'Câu 19: Ngày 22-12-1944, lực lượng vũ trang nào sau đây được thành lập theo Chỉ thị của Hồ Chí Minh?',
+    options: ['A. Việt Nam Tuyên truyền Giải phóng quân.', 'B. Quân Giải phóng miền Nam Việt Nam.', 'C. Quân đội Nhân dân Việt Nam.', 'D. Đội Việt Nam Giải phóng quân.'],
+    answer: 0
+  },
+  {
+    id: 'p1q20',
+    text: 'Câu 20: Năm 1945, Hồ Chí Minh có hoạt động nào sau đây?',
+    options: ['A. Phát động và lãnh đạo nhân dân Tổng khởi nghĩa giành chính quyền.', 'B. Lãnh đạo nhân dân Việt Nam tiến hành kháng chiến chống Pháp và Mỹ.', 'C. Xây dựng và hoàn thiện đường lối giải phóng dân tộc ở Việt Nam.', 'D. Triệu tập và chủ trì hội nghị hợp nhất các tổ chức cộng sản ở Việt Nam.'],
+    answer: 0
+  },
+  {
+    id: 'p1q21',
+    text: 'Câu 21: Nhận định nào sau đây là đúng về vị thế của các cường quốc trong trật tự thế giới hai cực I-an-ta (1945 – 1991)?',
+    options: ['A. Liên Xô đã có lợi thế khi được phân chia các vùng thuộc địa.', 'B. Anh không còn giữ được vai trò quốc tế như giai đoạn trước.', 'C. Mĩ giữ vai trò quyết định chi phối mọi mối quan hệ quốc tế.', 'D. Nhật Bản vươn lên trở thành một cường quốc về chính trị.'],
+    answer: 1
+  },
+  {
+    id: 'p1q22',
+    text: 'Câu 22: Nhận định nào sau đây phản ánh đúng một trong những thách thức nội khối đối với Cộng đồng ASEAN?',
+    options: ['A. Sự chênh lệch về thu nhập và trình độ phát triển giữa các nước.', 'B. Chịu sự cạnh tranh, ảnh hưởng của các nước lớn đối với khu vực.', 'C. Những diễn biến phức tạp của tình hình biển Đông và quốc tế.', 'D. Vấn nạn biến đổi khí hậu, ô nhiễm môi trường và dịch bệnh.'],
+    answer: 0
+  },
+  {
+    id: 'p1q23',
+    text: 'Câu 23: Nhận định nào sau đây là đúng với sự phát triển của cách mạng Việt Nam trong giai đoạn 1954 – 1975?',
+    options: ['A. Cách mạng miền Nam phát triển phụ thuộc vào cách mạng miền Bắc.', 'B. Cách mạng miền Nam quyết định sự phát triển của cách mạng cả nước.', 'C. Cách mạng hai miền có mối liên hệ mật thiết, gắn bó, tác động lẫn nhau.', 'D. Cách mạng miền Bắc và miền Nam phát triển độc lập và triệt tiêu nhau.'],
+    answer: 2
+  },
+  {
+    id: 'p1q24',
+    text: 'Câu 24: Nhận định nào sau đây phản ánh đúng ý nghĩa sự kiện Chính phủ Việt Nam Dân chủ Cộng hòa kí với Pháp Hiệp định Giơ-ne-vơ (1954)?',
+    options: ['A. Lần đầu tiên ngoại giao Việt Nam đàm phán đa phương với các nước lớn.', 'B. Hợp tác đa phương giữa Việt Nam với các cường quốc lớn được thiết lập.', 'C. Quan hệ ngoại giao giữa hai nước Việt Nam và Pháp nâng lên tầm cao mới.', 'D. Việt Nam trở thành thành viên của Hiệp hội các quốc gia Đông Nam Á.'],
+    answer: 0
+  }
+];
+
+const PASSAGES = {
+  passage1: {
+    title: 'Đọc tư liệu dưới đây và trả lời các câu hỏi từ 9 đến 11:',
+    content: `"Theo yêu cầu của Chính phủ Cộng hòa Nhân dân Campuchia, Việt Nam để lại một lực lượng quân tình nguyện và cử chuyên gia các ngành sang giúp nhân dân Campuchia ổn định cuộc sống. Quân đội Việt Nam phối hợp với lực lượng vũ trang của Cộng hòa Nhân dân Campuchia truy quét tàn quân Pôn Pốt. Nhiều cán bộ, trong đó có nhiều cán bộ trung cao cấp (có một ủy viên Bộ Chính trị và hai ủy viên Trung ương Đảng) ở các ban, ngành ở Trung ương và các tỉnh đã được cử sang giúp cách mạng Campuchia cả về chính trị, quân sự, kinh tế, kỹ thuật, y tế, giáo dục, văn hóa, nghệ thuật. Các tổ chuyên gia hoạt động theo từng thời gian ở các cấp từ Trung ương đến cấp huyện."`,
+    source: '(Trần Đức Cường: Lịch sử Việt Nam, tập 14 (2017), NXB Khoa học xã hội, trang 350)'
+  }
+};
+
+const PART2_DATA = [
+  {
+    id: 'p2q1',
+    title: 'Câu 1: Cho những thông tin trong bảng sau đây:',
+    tableContent: `<table style="width:100%;border-collapse:collapse;font-size:0.88rem;margin-bottom:10px;">
+      <tr style="background:#eef2f8;">
+        <td style="border:1px solid #c9d8ee;padding:8px 12px;font-weight:700;white-space:nowrap;">(5/1941)</td>
+        <td style="border:1px solid #c9d8ee;padding:8px 12px;">Nguyễn Ái Quốc chủ trì, địa điểm tại Cao Bằng, thành lập Mặt trận Việt Minh, nhiệm vụ trước mắt: giải phóng dân tộc, chuẩn bị khởi nghĩa vũ trang...</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #c9d8ee;padding:8px 12px;font-weight:700;white-space:nowrap;">(14-15/8/1945)</td>
+        <td style="border:1px solid #c9d8ee;padding:8px 12px;">Nguyễn Ái Quốc triệu tập và chủ trì, địa điểm tại Tuyên Quang, thông qua kế hoạch lãnh đạo toàn dân Tổng khởi nghĩa.</td>
+      </tr>
+      <tr style="background:#eef2f8;">
+        <td style="border:1px solid #c9d8ee;padding:8px 12px;font-weight:700;white-space:nowrap;">(16, 17/8/1945)</td>
+        <td style="border:1px solid #c9d8ee;padding:8px 12px;">Nguyễn Ái Quốc chủ trì, địa điểm tại Tuyên Quang, tán thành chủ trương Tổng khởi nghĩa, thông qua 10 chính sách của Việt Minh.</td>
+      </tr>
+      <tr>
+        <td style="border:1px solid #c9d8ee;padding:8px 12px;font-weight:700;white-space:nowrap;">Tháng 2/1951</td>
+        <td style="border:1px solid #c9d8ee;padding:8px 12px;">Chủ trì Đại hội đại biểu toàn lần II của Đảng Cộng sản Đông Dương.</td>
+      </tr>
+    </table>`,
+    items: [
+      { label: 'a', text: 'Tư liệu đề cập đến quá trình lãnh đạo cách mạng Việt Nam của Nguyễn Ái Quốc – Hồ Chí Minh trong cuộc kháng chiến chống Pháp.', answer: false },
+      { label: 'b', text: 'Trong quá trình chuẩn bị khởi nghĩa cho cuộc vũ trang giành chính quyền, Nguyễn Ái Quốc đóng vai trò lãnh đạo, vạch ra đường lối.', answer: true },
+      { label: 'c', text: 'Từ 1941 đến 1951, với vai trò người đứng đầu đất nước, Nguyễn Ái Quốc – Hồ Chí Minh đã có nhiều đóng góp quan trọng cho cách mạng.', answer: false },
+      { label: 'd', text: 'Đại hội đại biểu lần thứ hai của Đảng Cộng sản Đông Dương đã xác lập vai trò lãnh đạo cách mạng của Nguyễn Ái Quốc – Hồ Chí Minh.', answer: false }
+    ]
+  },
+  {
+    id: 'p2q2',
+    title: 'Câu 2: Cho đoạn tư liệu sau đây:',
+    passage: `"Với sự kết thúc của Chiến tranh lạnh, một số quốc gia mới nổi, đặc biệt là Trung Quốc và Ấn Độ, đã bắt đầu khẳng định vị thế của mình trong trật tự quốc tế. Sự tăng trưởng kinh tế vượt bậc và sự gia tăng sức mạnh quân sự của những quốc gia này đã thách thức vị trí thống trị của Hoa Kỳ và làm cho thế giới trở nên đa cực hơn. Trong bối cảnh này, sự hợp tác quốc tế và việc tìm kiếm cân bằng quyền lực trở thành những yếu tố then chốt để duy trì ổn định toàn cầu".`,
+    passageSource: '(Fareed Zakaria, Sự trỗi dậy của các quốc gia mới nổi và trật tự thế giới, 2008, tr. 34-35)',
+    items: [
+      { label: 'a', text: 'Sau khi chiến tranh lạnh chấm dứt, Trung Quốc và Ấn Độ đã vươn lên trở thành các cực trong trật tự thế giới mới đang hình thành.', answer: true },
+      { label: 'b', text: 'Sức mạnh kinh tế và quân sự của các cường quốc đã định hình lại trật tự thế giới mới, làm cho thế giới trở nên căng thẳng phức tạp.', answer: false },
+      { label: 'c', text: 'Hợp tác quốc tế và sự cân bằng quyền lực giữa các cường quốc là yếu tố then chốt để đảm bảo và duy trì sự ổn định toàn cầu.', answer: true },
+      { label: 'd', text: 'Thế giới sau Chiến tranh lạnh phát triển đề cao yếu tố lợi ích quốc gia, dân tộc, đồng thời tăng cường sức mạnh của các phe.', answer: false }
+    ]
+  },
+  {
+    id: 'p2q3',
+    title: 'Câu 3: Cho đoạn tư liệu sau đây:',
+    passage: `"Thắng lợi to lớn của cuộc Tổng tiến công Tết Mậu Thân năm 1968 đã làm nhụt ý chí xâm lược của quân Mỹ và làm đảo lộn thế chiến lược của chúng trên chiến trường. Đêm 31 - 3 - 1968, Tổng thống Mỹ B. Johnson buộc phải đơn phương tuyên bố chấm dứt vai trò chiến đấu trực tiếp của quân đội Mỹ trên chiến trường miền Nam và trao trả trách nhiệm cho quân đội Sài Gòn, ngừng toàn bộ hành động không quân và hải quân chống Việt Nam Dân chủ Cộng hòa, chấm dứt ném bom miền Bắc từ vĩ tuyến 20 trở ra và sẵn sàng cử đại diện đàm phán với phía Việt Nam Dân chủ Cộng hòa".`,
+    passageSource: '(Nguyễn Đình Luân, Bài học kết hợp "vừa đánh, vừa đàm" trong cuộc kháng chiến chống Mỹ, cứu nước, Tạp chí Cộng sản, số ra ngày 13/3/2023)',
+    items: [
+      { label: 'a', text: 'Tư liệu đề cập đến những ý nghĩa to lớn của cuộc Tổng tiến công và nổi dậy Mậu Thân 1968 trong kháng chiến chống Mỹ.', answer: true },
+      { label: 'b', text: 'Chiến thắng Mậu Thân 1968 đã đánh bại chiến tranh cục bộ, buộc Mỹ xuống thang và "Mỹ hóa" chiến tranh xâm lược Việt Nam.', answer: false },
+      { label: 'c', text: 'Với chiến thắng trong Mậu Thân, một mặt trận mới đã được mở ra trong cuộc kháng chiến chống Mỹ của nhân dân Việt Nam.', answer: true },
+      { label: 'd', text: 'Cuộc kháng chiến chống Mỹ đã có tính chính nghĩa khi mặt trận ngoại giao được mở ra sau chiến thắng Mậu Thân 1968.', answer: false }
+    ]
+  },
+  {
+    id: 'p2q4',
+    title: 'Câu 4: Cho đoạn tư liệu sau đây:',
+    passage: `" Sau cách mạng tháng Tám năm 1945, chưa có một quốc gia nào trên thế giới công nhận nước Việt Nam Dân chủ Cộng hòa. Hiệp định Sơ bộ ngày 6/3/1946 được kí kết giữa Chính phủ ta với đại diện chính phủ Pháp ở Việt Nam mới là "sự thừa nhận trên thực tế", sự có mặt của đại diện các phái bộ Đồng minh trong lễ kí tại Hà Nội cũng mang ý nghĩa đó. Nhưng đến Hội nghị Giơnevơ, với bản tham dự của năm cường quốc, bản tuyên bố cuối cùng đã ghi nhận nền độc lập, thống nhất, chủ quyền và toàn vẹn lãnh thổ của Việt Nam, Lào, Campuchia".`,
+    passageSource: '( Vũ Dương Ninh, Lịch sử quan hệ đối ngoại Việt Nam 1940-2010, NXB Chính trị quốc gia Sự thật, Hà Nội, 2015, tr.143-144).',
+    items: [
+      { label: 'a', text: 'Ngay sau cách mạng tháng Tám năm 1945, chưa có nước nào trên thế giới công nhận sự tồn tại và độc lập của nước Việt Nam mới.', answer: true },
+      { label: 'b', text: 'Hiệp định Sơ bộ đã mở ra con đường cho sự công nhận của quốc tế đối với chính phủ và nước Việt Nam Dân chủ Cộng hòa.', answer: true },
+      { label: 'c', text: 'Hiệp định Giơ ne vơ năm 1954 được ký kết là sự kế thừa toàn diện những nội dung của Hiệp định Sơ bộ được ký năm 1946.', answer: false },
+      { label: 'd', text: 'Từ Hiệp định Sơ bộ đến Hiệp định Giơ ne vơ là quá trình các nước đồng minh thừa nhận và thiết lập mối quan hệ với Việt Nam.', answer: false }
+    ]
+  }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let userAnswers = {}; // p1q1 -> optionIndex
+let userTFAnswers = {}; // p2q1_a -> true/false/null
+let submitted = false;
+let timerInterval = null;
+let timeLeft = 45 * 60;
+let shuffledPart1 = [];
+
+// ============================================================
+// SHUFFLE
+// ============================================================
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function initExam() {
+  // Shuffle Part 1 questions but keep passage group together
+  const passageGroup = PART1_DATA.filter(q => q.passageId);
+  const nonPassage = PART1_DATA.filter(q => !q.passageId);
+  
+  // Shuffle non-passage questions
+  const shuffledNonPassage = shuffleArray(nonPassage);
+  
+  // Insert passage group at a random position (keeping them together)
+  const insertPos = Math.floor(Math.random() * (shuffledNonPassage.length + 1));
+  shuffledPart1 = [
+    ...shuffledNonPassage.slice(0, insertPos),
+    ...passageGroup,
+    ...shuffledNonPassage.slice(insertPos)
+  ];
+
+  userAnswers = {};
+  userTFAnswers = {};
+  submitted = false;
+  timeLeft = 45 * 60;
+
+  renderExam();
+  startTimer();
+  updateProgress();
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderExam() {
+  const container = document.getElementById('examContent');
+  let html = '';
+
+  // PART 1
+  html += `<div class="section-title">PHẦN I: Câu hỏi trắc nghiệm (Câu 1 – 24)</div>`;
+  html += `<div class="section-desc">Thí sinh trả lời câu hỏi từ 1 đến 24. Mỗi câu hỏi thí sinh chỉ chọn <strong>một</strong> phương án.</div>`;
+
+  let passageRendered = false;
+  shuffledPart1.forEach((q, idx) => {
+    // Render passage before its first question
+    if (q.passageId && !passageRendered) {
+      const p = PASSAGES[q.passageId];
+      html += `<div class="question-card" style="border-left:4px solid var(--gold);">
+        <div class="question-num" style="color:var(--gold);">📜 ${p.title}</div>
+        <div class="passage-box">${p.content}<div class="passage-source">${p.source}</div></div>
+      </div>`;
+      passageRendered = true;
+    }
+
+    html += renderPart1Question(q, idx + 1);
+  });
+
+  // PART 2
+  html += `<div class="section-title" style="margin-top:40px;">PHẦN II: Câu hỏi đúng/sai (Câu 1 – 4)</div>`;
+  html += `<div class="section-desc">Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn <strong>Đúng</strong> hoặc <strong>Sai</strong>.</div>`;
+
+  PART2_DATA.forEach((q) => {
+    html += renderPart2Question(q);
+  });
+
+  container.innerHTML = html;
+}
+
+function renderPart1Question(q, displayNum) {
+  const optLetters = ['A', 'B', 'C', 'D'];
+  let optHtml = '';
+  q.options.forEach((opt, i) => {
+    const text = opt.replace(/^[A-D]\.\s*/, '');
+    optHtml += `
+      <label class="option-label" id="lbl_${q.id}_${i}" onclick="selectOption('${q.id}', ${i}, ${q.answer})">
+        <input type="radio" name="${q.id}" value="${i}">
+        <span class="option-dot" id="dot_${q.id}_${i}">${optLetters[i]}</span>
+        <span>${text}</span>
+      </label>`;
+  });
+
+  return `<div class="question-card" id="card_${q.id}">
+    <div class="question-num">Câu ${displayNum}</div>
+    <div class="question-text">${q.text.replace(/^Câu \d+[:.]?\s*/, '')}</div>
+    <div class="options" id="opts_${q.id}">${optHtml}</div>
+    <div class="explanation" id="exp_${q.id}"></div>
+  </div>`;
+}
+
+function renderPart2Question(q) {
+  let passageHtml = '';
+  if (q.tableContent) {
+    passageHtml = `<div class="passage-box" style="font-style:normal;">${q.tableContent}</div>`;
+  } else if (q.passage) {
+    passageHtml = `<div class="passage-box">${q.passage}<div class="passage-source">${q.passageSource}</div></div>`;
+  }
+
+  let itemsHtml = '';
+  q.items.forEach(item => {
+    itemsHtml += `
+      <div class="tf-item" id="tfitem_${q.id}_${item.label}">
+        <div class="tf-item-label"><strong>${item.label})</strong> ${item.text}</div>
+        <div class="tf-buttons">
+          <button class="tf-btn" id="tfbtn_${q.id}_${item.label}_true" onclick="selectTF('${q.id}', '${item.label}', true)">✓ Đúng</button>
+          <button class="tf-btn" id="tfbtn_${q.id}_${item.label}_false" onclick="selectTF('${q.id}', '${item.label}', false)">✗ Sai</button>
+        </div>
+      </div>`;
+  });
+
+  return `<div class="question-card" id="card_${q.id}">
+    <div class="question-num">📌 ${q.title}</div>
+    ${passageHtml}
+    <div class="tf-grid">${itemsHtml}</div>
+  </div>`;
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function selectOption(qId, optIdx, correctIdx) {
+  if (submitted) return;
+  userAnswers[qId] = optIdx;
+
+  // Update UI
+  const q = PART1_DATA.find(q => q.id === qId);
+  if (!q) return;
+  q.options.forEach((_, i) => {
+    const lbl = document.getElementById(`lbl_${qId}_${i}`);
+    if (lbl) {
+      lbl.classList.toggle('selected', i === optIdx);
+    }
+  });
+  updateProgress();
+}
+
+function selectTF(qId, itemLabel, value) {
+  if (submitted) return;
+  const key = `${qId}_${itemLabel}`;
+  userTFAnswers[key] = value;
+
+  const btnTrue = document.getElementById(`tfbtn_${qId}_${itemLabel}_true`);
+  const btnFalse = document.getElementById(`tfbtn_${qId}_${itemLabel}_false`);
+  if (btnTrue) { btnTrue.classList.toggle('selected-true', value === true); btnTrue.classList.remove('selected-false'); }
+  if (btnFalse) { btnFalse.classList.toggle('selected-false', value === false); btnFalse.classList.remove('selected-true'); }
+  updateProgress();
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const totalPart1 = PART1_DATA.length;
+  const totalPart2Items = PART2_DATA.reduce((s, q) => s + q.items.length, 0);
+  const total = totalPart1 + totalPart2Items;
+
+  const answeredPart1 = Object.keys(userAnswers).length;
+  const answeredPart2 = Object.keys(userTFAnswers).length;
+  const answered = answeredPart1 + answeredPart2;
+
+  document.getElementById('answeredCount').textContent = answered;
+  document.getElementById('totalQ').textContent = total;
+  document.getElementById('progressBar').style.width = (answered / total * 100) + '%';
+}
+
+// ============================================================
+// TIMER
+// ============================================================
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      autoSubmit();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  const disp = document.getElementById('timerDisplay');
+  disp.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  disp.className = 'timer-display';
+  if (timeLeft <= 300 && timeLeft > 60) disp.classList.add('warning');
+  if (timeLeft <= 60) disp.classList.add('danger');
+}
+
+function autoSubmit() {
+  doSubmit();
+}
+
+// ============================================================
+// SUBMIT
+// ============================================================
+function confirmSubmit() {
+  const totalPart1 = PART1_DATA.length;
+  const totalPart2Items = PART2_DATA.reduce((s, q) => s + q.items.length, 0);
+  const total = totalPart1 + totalPart2Items;
+  const answeredPart1 = Object.keys(userAnswers).length;
+  const answeredPart2 = Object.keys(userTFAnswers).length;
+  const answered = answeredPart1 + answeredPart2;
+  const unanswered = total - answered;
+
+  let msg = `Bạn đã trả lời <strong>${answered}/${total}</strong> câu hỏi.`;
+  if (unanswered > 0) msg += `<br><span style="color:var(--warning)">Còn ${unanswered} câu chưa trả lời.</span>`;
+  msg += '<br>Bạn có chắc chắn muốn nộp bài không?';
+
+  document.getElementById('confirmMsg').innerHTML = msg;
+  document.getElementById('confirmModal').classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirmModal').classList.remove('show');
+}
+
+function doSubmit() {
+  closeConfirm();
+  clearInterval(timerInterval);
+  submitted = true;
+
+  // Calculate scores
+  // Part 1: 0.25 each
+  let part1Correct = 0;
+  shuffledPart1.forEach(q => {
+    if (userAnswers[q.id] === q.answer) part1Correct++;
+  });
+  const part1Score = part1Correct * 0.25;
+
+  // Part 2: tiered scoring
+  let part2Score = 0;
+  PART2_DATA.forEach(q => {
+    let correctItems = 0;
+    q.items.forEach(item => {
+      const key = `${q.id}_${item.label}`;
+      const userVal = userTFAnswers[key];
+      if (userVal !== undefined && userVal !== null && userVal === item.answer) {
+        correctItems++;
+      }
+    });
+    if (correctItems === 1) part2Score += 0.1;
+    else if (correctItems === 2) part2Score += 0.25;
+    else if (correctItems === 3) part2Score += 0.5;
+    else if (correctItems === 4) part2Score += 1.0;
+  });
+
+  const totalScore = part1Score + part2Score;
+
+  showResults(totalScore, part1Score, part2Score, part1Correct);
+  markAnswers();
+}
+
+function markAnswers() {
+  // Part 1
+  shuffledPart1.forEach(q => {
+    const userAns = userAnswers[q.id];
+    q.options.forEach((_, i) => {
+      const lbl = document.getElementById(`lbl_${q.id}_${i}`);
+      if (!lbl) return;
+      lbl.classList.remove('selected', 'correct', 'wrong');
+      if (i === q.answer) {
+        lbl.classList.add('correct');
+      } else if (userAns === i) {
+        lbl.classList.add('wrong');
+      }
+    });
+
+    // Show explanation if wrong or unanswered
+    const exp = document.getElementById(`exp_${q.id}`);
+    if (exp) {
+      const isCorrect = userAnswers[q.id] === q.answer;
+      const optLetters = ['A', 'B', 'C', 'D'];
+      exp.innerHTML = isCorrect
+        ? `✅ <strong>Chính xác!</strong> Đáp án đúng: <strong>${optLetters[q.answer]}</strong>.`
+        : `❌ <strong>Sai.</strong> Đáp án đúng: <strong>${optLetters[q.answer]}</strong>.`;
+      exp.classList.add('show');
+    }
+  });
+
+  // Part 2
+  PART2_DATA.forEach(q => {
+    q.items.forEach(item => {
+      const key = `${q.id}_${item.label}`;
+      const userVal = userTFAnswers[key];
+      const correct = item.answer;
+
+      const btnTrue = document.getElementById(`tfbtn_${q.id}_${item.label}_true`);
+      const btnFalse = document.getElementById(`tfbtn_${q.id}_${item.label}_false`);
+
+      if (btnTrue) {
+        btnTrue.classList.remove('selected-true', 'selected-false', 'correct-true', 'wrong-true', 'correct-false', 'wrong-false');
+        if (correct === true) {
+          btnTrue.classList.add('correct-true');
+        } else if (userVal === true) {
+          btnTrue.classList.add('wrong-true');
+        }
+      }
+      if (btnFalse) {
+        btnFalse.classList.remove('selected-true', 'selected-false', 'correct-true', 'wrong-true', 'correct-false', 'wrong-false');
+        if (correct === false) {
+          btnFalse.classList.add('correct-false');
+        } else if (userVal === false) {
+          btnFalse.classList.add('wrong-false');
+        }
+      }
+    });
+  });
+
+  // Disable submit button
+  document.getElementById('btnSubmit').disabled = true;
+}
+
+function showResults(total, p1, p2, p1Correct) {
+  const icon = total >= 8 ? '🏆' : total >= 6 ? '🎓' : total >= 4 ? '📚' : '💪';
+  const title = total >= 8 ? 'Xuất sắc!' : total >= 6 ? 'Khá tốt!' : total >= 4 ? 'Cần cố gắng thêm' : 'Hãy ôn tập thêm';
+
+  document.getElementById('resultIcon').textContent = icon;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('scoreBig').textContent = total.toFixed(2) + ' / 10';
+
+  document.getElementById('scoreRow').innerHTML = `
+    <div class="score-box"><div class="sb-label">Phần I</div><div class="sb-val">${p1.toFixed(2)}</div></div>
+    <div class="score-box"><div class="sb-label">Phần II</div><div class="sb-val">${p2.toFixed(2)}</div></div>
+    <div class="score-box"><div class="sb-label">P1 Đúng</div><div class="sb-val">${p1Correct}/24</div></div>
+  `;
+
+  document.getElementById('scoreDetail').innerHTML =
+    `Tổng điểm: <strong>${total.toFixed(2)}</strong>/10 &nbsp;|&nbsp; Thang điểm 10`;
+
+  document.getElementById('resultModal').classList.add('show');
+}
+
+function reviewAnswers() {
+  document.getElementById('resultModal').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function retryExam() {
+  document.getElementById('resultModal').classList.remove('show');
+  initExam();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.onload = function() {
+  initExam();
+};
+</script>
+</body>
+</html>
